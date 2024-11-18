@@ -5,6 +5,8 @@
   background-color: #fafafa;
   text-align: center;
   overflow: scroll;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 @media (min-width: 440px) and (min-height: 400px) {
