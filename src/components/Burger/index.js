@@ -8,9 +8,13 @@ export const Burger = (props) => {
 
   const items = Object.entries(props.ingredients);
 
+  // console.log(items);
+
   items.map((el) => {
-    for (let i = 0; i < el[1]; i++)
+    // console.log(el[0]);
+    for (let i = 0; i < el[1].count; i++) {
       content.push(<BurgerIngredient key={`${el[0]}${i + 1}`} type={el[0]} />);
+    }
   });
 
   if (content.length === 0) {
