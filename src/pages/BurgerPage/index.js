@@ -1,0 +1,68 @@
+import React, { Component } from "react";
+import { Burger } from "../../components/Burger";
+import { BuildControls } from "../../components/BuildControls";
+
+const ingredientsInfo = {
+  salad: { price: 1500, name: "Салад" },
+  meat: { price: 2500, name: "Үхрийн мах" },
+  cheese: { price: 2200, name: "Бяслаг" },
+  bacon: { price: 1800, name: "Гахайн мах" },
+};
+
+class BurgerPage extends Component {
+  state = {
+    ingredients: {
+      salad: { count: 0, cost: 0 },
+      meat: { count: 0, cost: 0 },
+      cheese: { count: 0, cost: 0 },
+      bacon: { count: 0, cost: 0 },
+    },
+
+    totalPrice: 0,
+  };
+
+  addIngredient = (type) => {
+    const newIngredients = { ...this.state.ingredients };
+    newIngredients[type].count++;
+    // console.log(type, newIngredients[type].count);
+
+    const newTotalPrice = this.state.totalPrice + ingredientsInfo[type].price;
+
+    this.setState({ totalPrice: newTotalPrice, ingredients: newIngredients });
+  };
+
+  deleteIngredient = (type) => {
+    if (this.state.ingredients[type].count > 0) {
+      const newIngredients = { ...this.state.ingredients };
+      newIngredients[type].count--;
+
+      const newTotalPrice = this.state.totalPrice - ingredientsInfo[type].price;
+
+      this.setState({ totalPrice: newTotalPrice, ingredients: newIngredients });
+    }
+  };
+
+  render() {
+    const disabledIngredients = {};
+
+    Object.keys(this.state.ingredients).forEach((key) => {
+      disabledIngredients[key] = this.state.ingredients[key].count <= 0;
+    });
+
+    return (
+      <div>
+        <Burger ingredients={this.state.ingredients} />
+        <BuildControls
+          ingredientsInfo={ingredientsInfo}
+          ingredientsCount={this.state.ingredients}
+          totalPrice={this.state.totalPrice}
+          disabledIngredients={disabledIngredients}
+          addIngredient={this.addIngredient}
+          deleteIngredient={this.deleteIngredient}
+        />
+      </div>
+    );
+  }
+}
+
+export default BurgerPage;
