@@ -15,6 +15,7 @@
   cursor: pointer;
   outline: none;
   border-radius: 6px;
+  box-shadow: 2px 2px 4px rgba(16, 16, 16, 0.04);
 }
 
 .BuildControl button:disabled {
@@ -22,12 +23,14 @@
   border: 1px solid #e4e4e4;
   color: #ccc;
   cursor: default;
+  box-shadow: none;
 }
 
 .BuildControl button:hover:disabled {
   background-color: #f4f4f4;
   color: #ccc;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .Label {
@@ -45,6 +48,7 @@
 .BuildControl .More {
   background-color: #101010;
   color: white;
+  border: none;
 }
 
 .BuildControl .Less:hover,

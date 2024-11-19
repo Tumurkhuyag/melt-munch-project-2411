@@ -4,11 +4,12 @@ import css from "./style.module.css";
 
 export const BuildControls = (props) => {
   // console.log(props.ingredientsInfo);
+  // console.log(props.showConfirmModal);
 
   return (
     <div className={css.BuildControls}>
       <p>
-        Бүргэрийн үнэ: <strong>{props.totalPrice}</strong>{" "}
+        Бүргэрийн үнэ: <strong>{props.totalPrice}₮</strong>{" "}
       </p>
 
       {Object.keys(props.ingredientsInfo).map((el) => {
@@ -21,16 +22,17 @@ export const BuildControls = (props) => {
             deleteIngredient={props.deleteIngredient}
             disabledIngredients={props.disabledIngredients}
             type={el}
-            label={`${props.ingredientsInfo[el].name} (${
-              props.ingredientsCount[el].count
-            }ш, ${
-              props.ingredientsInfo[el].price * props.ingredientsCount[el].count
-            }₮) `}
+            label={`${props.ingredientsInfo[el].name} (${props.ingredientsCount[el].count}ш, ${props.ingredientsCount[el].cost}₮) `}
           />
         );
       })}
 
-      <button className={css.OrderButton}>Захиалах</button>
+      <button
+        onClick={props.showConfirmModal}
+        disabled={props.totalPrice <= 0}
+        className={css.OrderButton}>
+        Захиалах
+      </button>
     </div>
   );
 };

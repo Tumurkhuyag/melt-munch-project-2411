@@ -10,7 +10,7 @@
 }
 
 .OrderButton {
-  background-color: #333;
+  background-color: #101010;
   color: #fff;
   display: block;
   font: inherit;
@@ -21,9 +21,23 @@
   cursor: pointer;
   outline: none;
   border-radius: 6px;
+  box-shadow: 2px 2px 4px rgba(16, 16, 16, 0.04);
 }
 
 .OrderButton:hover {
-  background-color: #101010;
-  box-shadow: 4px 4px 8px rgba(16, 16, 16, 0.2);
+  background-color: #333;
+}
+
+.OrderButton:disabled {
+  background-color: #f4f4f4;
+  color: #ccc;
+  border: none;
+  cursor: default;
+}
+
+.OrderButton:hover:disabled {
+  background-color: #efefef;
+  box-shadow: none;
+  color: #ccc;
+  cursor: not-allowed;
 }

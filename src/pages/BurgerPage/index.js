@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Burger } from "../../components/Burger";
 import { BuildControls } from "../../components/BuildControls";
+import { Modal } from "../../components/General/Modal";
+import { OrderSummary } from "../../components/OrderSummary";
 
 const ingredientsInfo = {
   salad: { price: 1500, name: "Салад" },
@@ -19,12 +21,28 @@ class BurgerPage extends Component {
     },
 
     totalPrice: 0,
+    confirmOrder: false,
+    deliveryCost: 5000,
+  };
+
+  continueOrder = () => {
+    console.log("Захиалгыг баталгаажууллаа");
+  };
+
+  showConfirmModal = () => {
+    this.setState({ confirmOrder: true }); //state merge
+  };
+
+  closeConfirmModal = () => {
+    this.setState({ confirmOrder: false });
   };
 
   addIngredient = (type) => {
     const newIngredients = { ...this.state.ingredients };
     newIngredients[type].count++;
     // console.log(type, newIngredients[type].count);
+    newIngredients[type].cost =
+      newIngredients[type].count * ingredientsInfo[type].price;
 
     const newTotalPrice = this.state.totalPrice + ingredientsInfo[type].price;
 
@@ -35,6 +53,8 @@ class BurgerPage extends Component {
     if (this.state.ingredients[type].count > 0) {
       const newIngredients = { ...this.state.ingredients };
       newIngredients[type].count--;
+      newIngredients[type].cost =
+        newIngredients[type].count * ingredientsInfo[type].price;
 
       const newTotalPrice = this.state.totalPrice - ingredientsInfo[type].price;
 
@@ -49,10 +69,25 @@ class BurgerPage extends Component {
       disabledIngredients[key] = this.state.ingredients[key].count <= 0;
     });
 
+    // console.log(continueOrder);
+
     return (
       <div>
+        <Modal
+          closeConfirmModal={this.closeConfirmModal}
+          show={this.state.confirmOrder}>
+          <OrderSummary
+            closeConfirmModal={this.closeConfirmModal}
+            onConfirm={this.continueOrder}
+            deliveryCost={this.state.deliveryCost}
+            totalPrice={this.state.totalPrice}
+            ingredientsInfo={ingredientsInfo}
+            ingredients={this.state.ingredients}
+          />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
+          showConfirmModal={this.showConfirmModal}
           ingredientsInfo={ingredientsInfo}
           ingredientsCount={this.state.ingredients}
           totalPrice={this.state.totalPrice}
