@@ -1,0 +1,22 @@
+.SummaryContainer {
+  display: grid;
+  column-gap: 100px;
+}
+
+.SummaryContainer ul li {
+  display: flex;
+}
+
+ul li div {
+  width: 120px;
+}
+
+.ButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.TotalPrice {
+  font-size: 18px;
+}
