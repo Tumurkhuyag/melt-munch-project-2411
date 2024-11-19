@@ -7,19 +7,19 @@ export const BuildControl = (props) => {
     <div className={css.BuildControl}>
       <div className={css.Label}>{props.label}</div>
       <button
-        onClick={() => {
-          props.addIngredient(props.type);
-        }}
-        className={css.More}>
-        Нэмэх
-      </button>
-      <button
         disabled={props.disabledIngredients[props.type]}
         onClick={() => {
           props.deleteIngredient(props.type);
         }}
         className={css.Less}>
         Хасах
+      </button>
+      <button
+        onClick={() => {
+          props.addIngredient(props.type);
+        }}
+        className={css.More}>
+        Нэмэх
       </button>
     </div>
   );
