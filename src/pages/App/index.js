@@ -6,7 +6,7 @@ import BurgerPage from "../BurgerPage";
 function App() {
   return (
     <div>
-      <Toolbar logo={"Melt & Munch"} />
+      <Toolbar />
       <main className={css.Content}>
         <BurgerPage />
       </main>
