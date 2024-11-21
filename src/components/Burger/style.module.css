@@ -5,12 +5,12 @@
   text-align: center;
   overflow: scroll;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 @media (min-width: 440px) and (min-height: 400px) {
   .Burger {
     width: 460px;
-    height: 440px;
+    height: 320px;
   }
 }

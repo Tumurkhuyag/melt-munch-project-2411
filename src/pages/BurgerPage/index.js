@@ -4,6 +4,7 @@ import { BuildControls } from "../../components/BuildControls";
 import { Modal } from "../../components/General/Modal";
 import { OrderSummary } from "../../components/OrderSummary";
 import axios from "../../axios-orders";
+import { Spinner } from "../../components/General/Spinner";
 
 const ingredientsInfo = {
   salad: { price: 1500, name: "Салад" },
@@ -24,6 +25,37 @@ class BurgerPage extends Component {
     totalPrice: 0,
     confirmOrder: false,
     deliveryCost: 5000,
+    lastCustomerName: NaN,
+    loading: false,
+  };
+
+  componentDidMount = () => {
+    this.setState({ loading: true });
+
+    axios
+      .get("/orders.json")
+      .then((repspone) => {
+        const arr = Object.entries(repspone.data);
+        arr.map((el) =>
+          console.log(
+            el[1].deliveryAddress.name +
+              " ==> " +
+              (el[1].deliveryCost + el[1].totalPrice)
+          )
+        );
+        const lastOrder = arr[arr.length - 1][1];
+        console.log(lastOrder);
+
+        this.setState({
+          ingredients: lastOrder.ingredients,
+          totalPrice: lastOrder.totalPrice,
+          lastCustomerName: lastOrder.deliveryAddress.name,
+        });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        this.setState({ loading: false });
+      });
   };
 
   continueOrder = () => {
@@ -32,7 +64,7 @@ class BurgerPage extends Component {
       totalPrice: this.state.totalPrice,
       deliveryCost: this.state.deliveryCost,
       deliveryAddress: {
-        name: "Uno",
+        name: "Enkhlen",
         country: "Mongolia",
         city: "Ulaanbaatar",
         district: "Bayangol",
@@ -43,9 +75,13 @@ class BurgerPage extends Component {
       },
     };
 
+    this.setState({ loading: true });
     axios
       .post("/orders.json", order)
-      .then((repspone) => alert("Захиалга хүлээн авлаа"));
+      .then((repspone) => {})
+      .finally(() => {
+        this.setState({ loading: false });
+      });
     console.log("Захиалгыг баталгаажууллаа");
   };
 
@@ -96,15 +132,23 @@ class BurgerPage extends Component {
         <Modal
           closeConfirmModal={this.closeConfirmModal}
           show={this.state.confirmOrder}>
-          <OrderSummary
-            closeConfirmModal={this.closeConfirmModal}
-            onConfirm={this.continueOrder}
-            deliveryCost={this.state.deliveryCost}
-            totalPrice={this.state.totalPrice}
-            ingredientsInfo={ingredientsInfo}
-            ingredients={this.state.ingredients}
-          />
+          {this.state.loading ? (
+            <Spinner />
+          ) : (
+            <OrderSummary
+              closeConfirmModal={this.closeConfirmModal}
+              onConfirm={this.continueOrder}
+              deliveryCost={this.state.deliveryCost}
+              totalPrice={this.state.totalPrice}
+              ingredientsInfo={ingredientsInfo}
+              ingredients={this.state.ingredients}
+            />
+          )}
         </Modal>
+        {this.state.loading ? <Spinner /> : null}
+        <p style={{ width: "100%", textAlign: "center", fontSize: "24px" }}>
+          Сүүлчийн захиалагч: {this.state.lastCustomerName}
+        </p>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           showConfirmModal={this.showConfirmModal}
