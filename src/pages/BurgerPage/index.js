@@ -25,38 +25,9 @@ class BurgerPage extends Component {
     totalPrice: 0,
     confirmOrder: false,
     deliveryCost: 5000,
-    lastCustomerName: NaN,
-    loading: false,
   };
 
-  componentDidMount = () => {
-    this.setState({ loading: true });
-
-    axios
-      .get("/orders.json")
-      .then((repspone) => {
-        const arr = Object.entries(repspone.data);
-        const lastOrder = arr[arr.length - 1][1];
-
-        // Дэс дараалал өөрчлөгдөөд байсныг засахын тулд нэг бүрчлэн бичиж өгсөн
-        const orderedIngredients = {
-          salad: lastOrder.ingredients.salad,
-          meat: lastOrder.ingredients.meat,
-          cheese: lastOrder.ingredients.cheese,
-          bacon: lastOrder.ingredients.bacon,
-        };
-
-        this.setState({
-          ingredients: orderedIngredients,
-          totalPrice: lastOrder.totalPrice,
-          lastCustomerName: lastOrder.deliveryAddress.name,
-        });
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        this.setState({ loading: false });
-      });
-  };
+  componentDidMount = () => {};
 
   continueOrder = () => {
     const order = {
@@ -145,10 +116,7 @@ class BurgerPage extends Component {
             />
           )}
         </Modal>
-        {this.state.loading ? <Spinner /> : null}
-        <p style={{ width: "100%", textAlign: "center", fontSize: "24px" }}>
-          Сүүлчийн захиалагч: {this.state.lastCustomerName}
-        </p>
+
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           showConfirmModal={this.showConfirmModal}

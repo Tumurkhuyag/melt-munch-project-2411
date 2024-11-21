@@ -1,0 +1,40 @@
+.Order {
+  width: 80%;
+  border: 1px solid #e4e4e4;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.Value {
+  font-weight: 600;
+}
+
+.Label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.TotalPrice {
+  margin-bottom: 12px;
+}
+
+.AddressText {
+  display: flex;
+}
+
+.AddressText div {
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.Ingredient {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.Burger {
+  margin-bottom: 12px;
+}

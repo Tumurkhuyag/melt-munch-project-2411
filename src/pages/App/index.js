@@ -3,6 +3,8 @@ import css from "./style.module.css";
 import { Toolbar } from "../../components/Toolbar";
 import BurgerPage from "../BurgerPage";
 import { SideBar } from "../../components/SideBar";
+import OrderPage from "../OrderPage";
+import { Route, Routes } from "react-router-dom";
 
 class App extends Component {
   state = { showSidebar: false };
@@ -26,7 +28,10 @@ class App extends Component {
           toggleSidebar={this.toggleSidebar}
         />
         <main className={css.Content}>
-          <BurgerPage />
+          <Routes>
+            <Route path="/" Component={BurgerPage} />
+            <Route path="/orders" Component={OrderPage} />
+          </Routes>
         </main>
       </div>
     );
