@@ -22,8 +22,15 @@ nav {
   box-sizing: border-box;
 }
 
+.HideHamburgerMenu {
+  display: none;
+}
+
 @media (max-width: 500px) {
   .HideWhenMobile {
     display: none;
+  }
+  .HideHamburgerMenu {
+    display: initial;
   }
 }

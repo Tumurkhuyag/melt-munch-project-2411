@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 501px) {
   .Menu {
     flex-flow: row;
     height: 100%;

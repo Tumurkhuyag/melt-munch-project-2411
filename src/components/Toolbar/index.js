@@ -8,11 +8,13 @@ import { HamburgerMenu } from "../HamburgerMenu";
 export const Toolbar = (props) => {
   return (
     <header className={css.Toolbar}>
-      <HamburgerMenu toggleSidebar={props.toggleSidebar} />
       <Logo />
       <nav className={css.HideWhenMobile}>
         <Menu />
       </nav>
+      <div className={css.HideHamburgerMenu}>
+        <HamburgerMenu toggleSidebar={props.toggleSidebar} />
+      </div>
     </header>
   );
 };
