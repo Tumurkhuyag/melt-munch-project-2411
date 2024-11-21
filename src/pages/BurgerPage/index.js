@@ -32,14 +32,14 @@ class BurgerPage extends Component {
       totalPrice: this.state.totalPrice,
       deliveryCost: this.state.deliveryCost,
       deliveryAddress: {
-        name: "Tom",
+        name: "Uno",
         country: "Mongolia",
         city: "Ulaanbaatar",
         district: "Bayangol",
         khoroo: "26 khoroo",
         khoroolol: "Yusun Erdene",
         building: "29-1",
-        number: "60",
+        number: "35",
       },
     };
 
