@@ -3,6 +3,7 @@ import { Burger } from "../../components/Burger";
 import { BuildControls } from "../../components/BuildControls";
 import { Modal } from "../../components/General/Modal";
 import { OrderSummary } from "../../components/OrderSummary";
+import axios from "../../axios-orders";
 
 const ingredientsInfo = {
   salad: { price: 1500, name: "Салад" },
@@ -26,6 +27,25 @@ class BurgerPage extends Component {
   };
 
   continueOrder = () => {
+    const order = {
+      ingredients: this.state.ingredients,
+      totalPrice: this.state.totalPrice,
+      deliveryCost: this.state.deliveryCost,
+      deliveryAddress: {
+        name: "Tom",
+        country: "Mongolia",
+        city: "Ulaanbaatar",
+        district: "Bayangol",
+        khoroo: "26 khoroo",
+        khoroolol: "Yusun Erdene",
+        building: "29-1",
+        number: "60",
+      },
+    };
+
+    axios
+      .post("/orders.json", order)
+      .then((repspone) => alert("Захиалга хүлээн авлаа"));
     console.log("Захиалгыг баталгаажууллаа");
   };
 
