@@ -36,18 +36,18 @@ class BurgerPage extends Component {
       .get("/orders.json")
       .then((repspone) => {
         const arr = Object.entries(repspone.data);
-        arr.map((el) =>
-          console.log(
-            el[1].deliveryAddress.name +
-              " ==> " +
-              (el[1].deliveryCost + el[1].totalPrice)
-          )
-        );
         const lastOrder = arr[arr.length - 1][1];
-        console.log(lastOrder);
+
+        // Дэс дараалал өөрчлөгдөөд байсныг засахын тулд нэг бүрчлэн бичиж өгсөн
+        const orderedIngredients = {
+          salad: lastOrder.ingredients.salad,
+          meat: lastOrder.ingredients.meat,
+          cheese: lastOrder.ingredients.cheese,
+          bacon: lastOrder.ingredients.bacon,
+        };
 
         this.setState({
-          ingredients: lastOrder.ingredients,
+          ingredients: orderedIngredients,
           totalPrice: lastOrder.totalPrice,
           lastCustomerName: lastOrder.deliveryAddress.name,
         });

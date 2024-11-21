@@ -8,10 +8,6 @@ export const BuildControls = (props) => {
 
   return (
     <div className={css.BuildControls}>
-      <p>
-        Бүргэрийн үнэ: <strong>{props.totalPrice}₮</strong>{" "}
-      </p>
-
       {Object.keys(props.ingredientsInfo).map((el) => {
         // console.log(el);
         // console.log(props.ingredientsCount[el]);
@@ -26,13 +22,19 @@ export const BuildControls = (props) => {
           />
         );
       })}
+      <div className={css.Footer}>
+        <div className={css.Summary}>
+          <div className={css.Label}>Нийт үнэ:</div>
+          <div className={css.Value}>{props.totalPrice}₮</div>
+        </div>
 
-      <button
-        onClick={props.showConfirmModal}
-        disabled={props.totalPrice <= 0}
-        className={css.OrderButton}>
-        Захиалах
-      </button>
+        <button
+          onClick={props.showConfirmModal}
+          disabled={props.totalPrice <= 0}
+          className={css.OrderButton}>
+          Захиалах
+        </button>
+      </div>
     </div>
   );
 };
