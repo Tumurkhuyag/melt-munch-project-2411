@@ -7,7 +7,7 @@ export const Modal = (props) => {
   //   console.log(props.show);
   return (
     <div>
-      <Shadow show={props.show} />
+      <Shadow show={props.show} onClick={props.closeConfirmModal} />
       <div
         style={{
           transform: props.show ? "translateY(0)" : "translateY(-100vh)",

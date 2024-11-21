@@ -14,3 +14,16 @@
   z-index: 90;
   font-size: 18px;
 }
+
+nav {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+  .HideWhenMobile {
+    display: none;
+  }
+}

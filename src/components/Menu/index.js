@@ -5,12 +5,12 @@ import { MenuItem } from "../MenuItem";
 
 export const Menu = () => {
   return (
-    <div>
+    <div className={css.MenuContainer}>
       <ul className={css.Menu}>
         <MenuItem active link="/">
-          Бургер
+          Захиалах
         </MenuItem>
-        <MenuItem link="/">Төлбөр</MenuItem>
+        <MenuItem link="/login">Нэвтрэх</MenuItem>
       </ul>
     </div>
   );
