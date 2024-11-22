@@ -32,7 +32,7 @@ export const BuildControls = (props) => {
           onClick={props.showConfirmModal}
           disabled={props.totalPrice <= 0}
           className={css.OrderButton}>
-          Захиалах
+          Сагслах
         </button>
       </div>
     </div>

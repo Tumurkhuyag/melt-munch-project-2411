@@ -8,17 +8,17 @@ export const DeliveryInfo = () => {
   const [deliveryCost, setDeliveryCost] = useState(null);
 
   const [deliveryInfo, setDeliveryInfo] = useState({
-    name: null,
-    phoneNumber1: null,
-    phoneNumber2: null,
+    name: "",
+    phoneNumber1: "",
+    phoneNumber2: "",
     country: "Монгол",
     city: "Улаанбаатар",
-    district: null,
-    khoroo: null,
-    khoroolol: null,
-    building: null,
-    doorNumber: null,
-    notes: null,
+    district: "",
+    khoroo: "",
+    khoroolol: "",
+    building: "",
+    doorNumber: "",
+    notes: "",
   });
 
   const handleInputChange = (event) => {
@@ -105,7 +105,7 @@ export const DeliveryInfo = () => {
           onChange={handleInputChange}
           placeholder="Улс"></input>
       </div>
-      <Button type="Primary" label="Захиалга илгээх" />
+      <Button type="Primary" label="Захиалах" />
     </div>
   );
 };

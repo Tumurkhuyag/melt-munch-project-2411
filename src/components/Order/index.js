@@ -43,13 +43,14 @@ export const Order = (props) => {
         </div>
 
         <div className={css.Address}>
-          <div className={css.Label}>Хаяг:</div>
+          <div className={css.Line}></div>
           <div className={css.AddressText}>
-            <div>{props.deliveryAddress.district},</div>
-            <div>{props.deliveryAddress.khoroo},</div>
-            <div>{props.deliveryAddress.khoroolol},</div>
-            <div>{props.deliveryAddress.building},</div>
+            <div>{props.deliveryAddress.district}</div>
+            <div>{props.deliveryAddress.khoroo}</div>
+            <div>{props.deliveryAddress.khoroolol}</div>
+            <div>{props.deliveryAddress.building}</div>
             <div>{props.deliveryAddress.number}</div>
+            <div>{props.deliveryAddress.name}</div>
           </div>
         </div>
       </div>

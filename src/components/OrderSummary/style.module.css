@@ -1,6 +1,25 @@
 .SummaryContainer {
+  width: 100%;
+  height: 100%;
   display: grid;
-  column-gap: 100px;
+  justify-content: center;
+}
+
+.SummaryContainer div {
+  padding: 4px 0px;
+}
+
+p {
+  width: 100%;
+  line-height: 130%;
+}
+
+h2 {
+  margin-bottom: 8px;
+}
+
+.TotalPrice {
+  text-align: right;
 }
 
 .SummaryContainer ul li {
@@ -8,6 +27,40 @@
 }
 
 ul li div {
+  max-width: 400px;
+  display: flex;
+  flex: 1;
+}
+
+.Count {
+  max-width: 60px;
+  display: flex;
+  flex: 0.5;
+}
+
+.Amount {
+  max-width: 60px;
+  display: flex;
+  flex: 0.5;
+}
+
+ul li .Amount {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.DeliveryCost {
+  max-width: 480px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DeliveryCost .Value {
+  text-align: right;
+}
+
+.DeliveryCost div {
+  display: inline-block;
   width: 120px;
 }
 
