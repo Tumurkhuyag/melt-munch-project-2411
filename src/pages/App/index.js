@@ -5,6 +5,7 @@ import BurgerPage from "../BurgerPage";
 import { SideBar } from "../../components/SideBar";
 import OrderPage from "../OrderPage";
 import { Route, Routes } from "react-router-dom";
+import { ShippingPage } from "../ShippingPage";
 
 class App extends Component {
   state = { showSidebar: false };
@@ -29,8 +30,9 @@ class App extends Component {
         />
         <main className={css.Content}>
           <Routes>
-            <Route path="/" Component={BurgerPage} />
-            <Route path="/orders" Component={OrderPage} />
+            <Route path="/" element={<BurgerPage />} />
+            <Route path="/ship" element={<ShippingPage />} />
+            <Route path="/orders" element={<OrderPage />} />
           </Routes>
         </main>
       </div>

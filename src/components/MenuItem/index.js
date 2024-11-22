@@ -1,9 +1,16 @@
 import React from "react";
 
 import css from "./style.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 export const MenuItem = (props) => {
+  const location = useLocation(); //Get current location
+  const navigate = useNavigate(); // Programmatic navigation
+
+  const handleNavigation = () => {
+    navigate(props.link); // Navigate programmatically
+  };
+
   return (
     <li className={css.MenuItem}>
       <NavLink
@@ -13,9 +20,6 @@ export const MenuItem = (props) => {
         }>
         {props.children}
       </NavLink>
-      {/* <a className={props.active ? css.active : null} href={props.link}>
-        {props.children}
-      </a> */}
     </li>
   );
 };

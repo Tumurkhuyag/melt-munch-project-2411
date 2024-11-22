@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Burger } from "../../components/Burger";
 import { BuildControls } from "../../components/BuildControls";
 import { Modal } from "../../components/General/Modal";
 import { OrderSummary } from "../../components/OrderSummary";
 import axios from "../../axios-orders";
 import { Spinner } from "../../components/General/Spinner";
+import { useNavigate, useLocation, withNavigate } from "react-router-dom";
 
 const ingredientsInfo = {
   salad: { price: 1500, name: "Салад" },
@@ -13,123 +14,121 @@ const ingredientsInfo = {
   bacon: { price: 1800, name: "Гахайн мах" },
 };
 
-class BurgerPage extends Component {
-  state = {
-    ingredients: {
-      salad: { count: 0, cost: 0 },
-      meat: { count: 0, cost: 0 },
-      cheese: { count: 0, cost: 0 },
-      bacon: { count: 0, cost: 0 },
-    },
+const BurgerPage = () => {
+  const [ingredients, setIngredients] = useState({
+    salad: { count: 0, cost: 0 },
+    meat: { count: 0, cost: 0 },
+    cheese: { count: 0, cost: 0 },
+    bacon: { count: 0, cost: 0 },
+  });
 
-    totalPrice: 0,
-    confirmOrder: false,
-    deliveryCost: 5000,
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [confirmOrder, setConfirmOrder] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const deliveryCost = 5000;
+  const navigate = useNavigate();
+
+  const continueOrder = () => {
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   totalPrice: this.state.totalPrice,
+    //   deliveryCost: this.state.deliveryCost,
+    //   deliveryAddress: {
+    //     name: "Enkhlen",
+    //     country: "Mongolia",
+    //     city: "Ulaanbaatar",
+    //     district: "Bayangol",
+    //     khoroo: "26 khoroo",
+    //     khoroolol: "Yusun Erdene",
+    //     building: "29-1",
+    //     number: "35",
+    //   },
+    // };
+
+    // this.setState({ loading: true });
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((repspone) => {})
+    //   .finally(() => {
+    //     this.setState({ loading: false });
+    //   });
+    // console.log("Захиалгыг баталгаажууллаа");
+
+    const params = [];
+
+    for (let ingredient in ingredients) {
+      params.push(ingredient + "=" + ingredients[ingredient].count);
+    }
+
+    const query = params.join("&");
+    console.log(query);
+
+    navigate({ pathname: "/ship", search: query });
+    closeConfirmModal();
   };
 
-  componentDidMount = () => {};
+  const showConfirmModal = () => setConfirmOrder(true); //state merge
+  const closeConfirmModal = () => setConfirmOrder(false);
 
-  continueOrder = () => {
-    const order = {
-      ingredients: this.state.ingredients,
-      totalPrice: this.state.totalPrice,
-      deliveryCost: this.state.deliveryCost,
-      deliveryAddress: {
-        name: "Enkhlen",
-        country: "Mongolia",
-        city: "Ulaanbaatar",
-        district: "Bayangol",
-        khoroo: "26 khoroo",
-        khoroolol: "Yusun Erdene",
-        building: "29-1",
-        number: "35",
-      },
-    };
-
-    this.setState({ loading: true });
-    axios
-      .post("/orders.json", order)
-      .then((repspone) => {})
-      .finally(() => {
-        this.setState({ loading: false });
-      });
-    console.log("Захиалгыг баталгаажууллаа");
-  };
-
-  showConfirmModal = () => {
-    this.setState({ confirmOrder: true }); //state merge
-  };
-
-  closeConfirmModal = () => {
-    this.setState({ confirmOrder: false });
-  };
-
-  addIngredient = (type) => {
-    const newIngredients = { ...this.state.ingredients };
+  const addIngredient = (type) => {
+    const newIngredients = { ...ingredients };
     newIngredients[type].count++;
     // console.log(type, newIngredients[type].count);
     newIngredients[type].cost =
       newIngredients[type].count * ingredientsInfo[type].price;
 
-    const newTotalPrice = this.state.totalPrice + ingredientsInfo[type].price;
-
-    this.setState({ totalPrice: newTotalPrice, ingredients: newIngredients });
+    const newTotalPrice = totalPrice + ingredientsInfo[type].price;
+    setTotalPrice(newTotalPrice);
+    setIngredients(newIngredients);
   };
 
-  deleteIngredient = (type) => {
-    if (this.state.ingredients[type].count > 0) {
-      const newIngredients = { ...this.state.ingredients };
+  const deleteIngredient = (type) => {
+    if (ingredients[type].count > 0) {
+      const newIngredients = { ...ingredients };
       newIngredients[type].count--;
       newIngredients[type].cost =
         newIngredients[type].count * ingredientsInfo[type].price;
 
-      const newTotalPrice = this.state.totalPrice - ingredientsInfo[type].price;
-
-      this.setState({ totalPrice: newTotalPrice, ingredients: newIngredients });
+      const newTotalPrice = totalPrice + ingredientsInfo[type].price;
+      setTotalPrice(newTotalPrice);
+      setIngredients(newIngredients);
     }
   };
 
-  render() {
-    const disabledIngredients = {};
+  const disabledIngredients = { ...ingredients };
+  Object.keys(ingredients).forEach((key) => {
+    disabledIngredients[key] = ingredients[key].count <= 0;
+  });
 
-    Object.keys(this.state.ingredients).forEach((key) => {
-      disabledIngredients[key] = this.state.ingredients[key].count <= 0;
-    });
+  return (
+    <div>
+      <Modal closeConfirmModal={closeConfirmModal} show={confirmOrder}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <OrderSummary
+            closeConfirmModal={closeConfirmModal}
+            onConfirm={continueOrder}
+            deliveryCost={deliveryCost}
+            totalPrice={totalPrice}
+            ingredientsInfo={ingredientsInfo}
+            ingredients={ingredients}
+          />
+        )}
+      </Modal>
 
-    // console.log(continueOrder);
-
-    return (
-      <div>
-        <Modal
-          closeConfirmModal={this.closeConfirmModal}
-          show={this.state.confirmOrder}>
-          {this.state.loading ? (
-            <Spinner />
-          ) : (
-            <OrderSummary
-              closeConfirmModal={this.closeConfirmModal}
-              onConfirm={this.continueOrder}
-              deliveryCost={this.state.deliveryCost}
-              totalPrice={this.state.totalPrice}
-              ingredientsInfo={ingredientsInfo}
-              ingredients={this.state.ingredients}
-            />
-          )}
-        </Modal>
-
-        <Burger ingredients={this.state.ingredients} />
-        <BuildControls
-          showConfirmModal={this.showConfirmModal}
-          ingredientsInfo={ingredientsInfo}
-          ingredientsCount={this.state.ingredients}
-          totalPrice={this.state.totalPrice}
-          disabledIngredients={disabledIngredients}
-          addIngredient={this.addIngredient}
-          deleteIngredient={this.deleteIngredient}
-        />
-      </div>
-    );
-  }
-}
+      <Burger ingredients={ingredients} />
+      <BuildControls
+        showConfirmModal={showConfirmModal}
+        ingredientsInfo={ingredientsInfo}
+        ingredientsCount={ingredients}
+        totalPrice={totalPrice}
+        disabledIngredients={disabledIngredients}
+        addIngredient={addIngredient}
+        deleteIngredient={deleteIngredient}
+      />
+    </div>
+  );
+};
 
 export default BurgerPage;
