@@ -78,6 +78,7 @@ const BurgerPage = () => {
       newIngredients[type].count * ingredientsInfo[type].price;
 
     const newTotalPrice = totalPrice + ingredientsInfo[type].price;
+    console.log(newTotalPrice);
     setTotalPrice(newTotalPrice);
     setIngredients(newIngredients);
   };
@@ -89,7 +90,7 @@ const BurgerPage = () => {
       newIngredients[type].cost =
         newIngredients[type].count * ingredientsInfo[type].price;
 
-      const newTotalPrice = totalPrice + ingredientsInfo[type].price;
+      const newTotalPrice = totalPrice - ingredientsInfo[type].price;
       setTotalPrice(newTotalPrice);
       setIngredients(newIngredients);
     }
