@@ -29,7 +29,11 @@ export const OrderSummary = (props) => {
           type="Secondary"
           label="Болих"
         />
-        <Button clicked={props.onConfirm} type="Primary" label="Илгээх" />
+        <Button
+          clicked={props.onConfirm}
+          type="Primary"
+          label="Баталгаажуулах"
+        />
       </div>
     </div>
   );

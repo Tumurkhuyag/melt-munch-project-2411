@@ -31,7 +31,7 @@ class App extends Component {
         <main className={css.Content}>
           <Routes>
             <Route path="/" element={<BurgerPage />} />
-            <Route path="/ship" element={<ShippingPage />} />
+            <Route path="/ship/*" element={<ShippingPage />} />
             <Route path="/orders" element={<OrderPage />} />
           </Routes>
         </main>

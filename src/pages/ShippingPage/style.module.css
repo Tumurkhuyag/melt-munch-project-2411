@@ -1,0 +1,42 @@
+.ShippingPage {
+  display: grid;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  row-gap: 12px;
+}
+
+.Title h2,
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.Title p {
+  font-size: 16px;
+  line-height: 130%;
+  color: #666;
+}
+
+.Title {
+  display: grid;
+  padding: 16px;
+  width: 300px;
+  margin: 0px auto;
+  row-gap: 8px;
+}
+
+.Buttons {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+  padding: 0px 32px;
+  margin: auto;
+}
+
+@media (min-width: 440px) and (min-height: 400px) {
+  .ShippingPage {
+    width: 460px;
+    height: auto;
+  }
+}

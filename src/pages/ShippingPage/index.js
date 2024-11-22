@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Burger } from "../../components/Burger";
 import css from "./style.module.css";
 import { Button } from "../../components/General/Button";
+import { DeliveryInfo } from "../../components/DeliveryInfo";
 
 export const ShippingPage = () => {
   const location = useLocation();
@@ -37,10 +38,22 @@ export const ShippingPage = () => {
 
   const goBack = () => navigate(-1);
 
+  const showContactData = () => navigate("/ship/contact");
+
   return (
     <div className={css.ShippingPage}>
       <Burger ingredients={ingredients} />
-      <Button clicked={goBack} type="Secondary" label="Захиалгыг цуцлах" />
+      <div className={css.Title}>
+        <h2>Хүргүүлэх хаяг</h2>
+        <p>Захиалгаа хүлээн авах хаяг, байршлаа оруулна уу.</p>
+      </div>
+      <div className={css.Buttons}>
+        <Button clicked={goBack} type="Secondary" label="Цуцлах" />
+        <Button clicked={showContactData} type="Primary" label="Төлбөр төлөх" />
+      </div>
+      <Routes>
+        <Route path="contact" element={<DeliveryInfo />} />
+      </Routes>
     </div>
   );
 };

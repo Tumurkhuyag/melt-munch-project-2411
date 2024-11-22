@@ -1,0 +1,62 @@
+.DeliveryInfo {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: auto;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  row-gap: 20px; /* Adds space between elements */
+  box-sizing: border-box;
+}
+
+.DeliveryInfo div {
+  display: flex;
+  gap: 12px; /* Space between inputs in the same row */
+}
+
+.DeliveryInfo div input,
+.DeliveryInfo input {
+  flex: 1; /* Ensure inputs fill the available space */
+  font-size: 16px;
+  height: 40px; /* Uniform height */
+  padding: 0 12px;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.DeliveryInfo input:focus {
+  outline: none;
+  border: 1px solid #101010;
+}
+
+.DeliveryInfo button {
+  margin-top: 20px;
+  align-self: flex-start; /* Align button to the left */
+}
+
+.DeliveryInfo input {
+  flex: none; /* Avoid stretching */
+}
+
+.DeliveryInfo .Notes {
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 80px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+  width: 100%; /* Ensure it takes up full width */
+  word-wrap: break-word; /* Allow word wrapping */
+  overflow-wrap: break-word; /* Ensure wrapping of long words */
+  resize: vertical; /* Allow resizing vertically if needed */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.DeliveryInfo .Notes:focus {
+  outline: none;
+  border: 1px solid #101010;
+}
