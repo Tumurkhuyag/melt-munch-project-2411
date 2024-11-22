@@ -28,7 +28,6 @@ p {
   display: inline-flex;
   column-gap: 12px;
   padding: 0px;
-  text-align: ;
 }
 
 @media (min-width: 510px) {
