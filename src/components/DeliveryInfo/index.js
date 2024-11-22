@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import css from "./style.module.css";
 import { Button } from "../General/Button";
@@ -8,48 +8,103 @@ export const DeliveryInfo = () => {
   const [deliveryCost, setDeliveryCost] = useState(null);
 
   const [deliveryInfo, setDeliveryInfo] = useState({
-    name: "Enkhlen",
-    phoneNumber1: "80903345",
-    phoneNumber2: "66102233",
-    country: "Mongolia",
-    city: "Ulaanbaatar",
-    district: "Bayangol",
-    khoroo: "26 khoroo",
-    khoroolol: "Yusun Erdene",
-    building: "29-1",
-    doorNumber: "35",
-    note: "Орцны код 1323# гэж бичээрэй",
+    name: null,
+    phoneNumber1: null,
+    phoneNumber2: null,
+    country: "Монгол",
+    city: "Улаанбаатар",
+    district: null,
+    khoroo: null,
+    khoroolol: null,
+    building: null,
+    doorNumber: null,
+    notes: null,
   });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target; // Extract `name` and `value` from the input
+    setDeliveryInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value, // Update the specific field based on `name`
+    }));
+  };
 
   return (
     <div className={css.DeliveryInfo}>
+      <input
+        type="text"
+        name="name"
+        value={deliveryInfo.name}
+        onChange={handleInputChange}
+        placeholder="Таны нэр"></input>
       <div>
-        <input type="text" name="phoneNumber1" placeholder="Утас #1"></input>
-        <input type="text" name="phoneNumber2" placeholder="Утас #2"></input>
+        <input
+          type="tel"
+          pattern="[0-9]{4}-[0-9]{4}"
+          name="phoneNumber1"
+          value={deliveryInfo.phoneNumber1}
+          onChange={handleInputChange}
+          placeholder="Утас #1"></input>
+        <input
+          type="tel"
+          name="phoneNumber2"
+          value={deliveryInfo.phoneNumber2}
+          onChange={handleInputChange}
+          placeholder="Утас #2"></input>
       </div>
-
       <div>
-        <input type="text" name="district" placeholder="Дүүрэг"></input>
-        <input type="text" name="khoroo" placeholder="Хороо"></input>
+        <input
+          type="text"
+          name="district"
+          value={deliveryInfo.district}
+          onChange={handleInputChange}
+          placeholder="Дүүрэг"></input>
+        <input
+          type="text"
+          name="khoroo"
+          value={deliveryInfo.khoroo}
+          onChange={handleInputChange}
+          placeholder="Хороо"></input>
       </div>
       <div>
-        <input type="text" name="building" placeholder="Байр"></input>
-        <input type="text" name="doorNumber" placeholder="Хаалга"></input>
+        <input
+          type="text"
+          name="building"
+          value={deliveryInfo.building}
+          onChange={handleInputChange}
+          placeholder="Байр"></input>
+        <input
+          type="text"
+          name="doorNumber"
+          value={deliveryInfo.doorNumber}
+          onChange={handleInputChange}
+          placeholder="Хаалга"></input>
       </div>
       {/* <input
         type="text"
         name="khoroolol"
         placeholder="Хотхон / Хороолол"></input> */}
-
       <textarea
-        name="note"
+        type="text"
+        name="notes"
+        value={deliveryInfo.notes}
+        onChange={handleInputChange}
         placeholder="Нэмэлт мэдээлэл"
         className={css.Notes}></textarea>
-      {/* <div>
-        <input type="text" name="country" placeholder="Улс"></input>
-        <input type="text" name="city" placeholder="Хот"></input>
+      <div>
+        <input
+          type="text"
+          name="city"
+          value={deliveryInfo.city}
+          onChange={handleInputChange}
+          placeholder="Хот"></input>
+        <input
+          type="text"
+          name="country"
+          value={deliveryInfo.country}
+          onChange={handleInputChange}
+          placeholder="Улс"></input>
       </div>
-      <input type="text" name="name" placeholder="Таны нэр"></input> */}
       <Button type="Primary" label="Захиалга илгээх" />
     </div>
   );

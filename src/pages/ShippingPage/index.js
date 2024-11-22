@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  replace,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Burger } from "../../components/Burger";
 import css from "./style.module.css";
 import { Button } from "../../components/General/Button";
 import { DeliveryInfo } from "../../components/DeliveryInfo";
+import { Order } from "../../components/Order";
 
 export const ShippingPage = () => {
   const location = useLocation();
@@ -15,45 +22,73 @@ export const ShippingPage = () => {
     bacon: { count: 1, cost: 0 },
   });
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const [deliveryAddress, setDeliveryAddress] = useState({
+    name: "Нэр",
+    building: "Байр",
+    city: "Улаанбаатар",
+    country: "Монгол",
+    district: "Дүүрэг",
+    khoroo: "Хороо",
+    khoroolol: "Хотхон",
+    number: "Хороо",
+  });
+
+  const [deliveryCost, setDeliveryCost] = useState(5000);
+
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const caughtIngredients = {};
+    const caughtParams = {};
 
     for (let [key, value] of query.entries()) {
-      caughtIngredients[key] = parseInt(value, 10); // Parse the value as a number
+      caughtParams[key] = parseInt(value, 10); // Parse the value as a number
     }
 
-    // console.log(caughtIngredients) => {salad: 1, meat: 1, cheese: 0, bacon: 0}
+    // console.log(caughtParams) => {salad: 1, meat: 1, cheese: 0, bacon: 0}
 
     const updatedIngredients = { ...ingredients };
+    let caughtPrice = 0;
 
-    for (let key in caughtIngredients) {
+    for (let key in caughtParams) {
       if (updatedIngredients[key]) {
-        updatedIngredients[key].count = caughtIngredients[key];
+        updatedIngredients[key].count = caughtParams[key];
+      } else if (key === "totalPrice") {
+        caughtPrice = caughtParams[key];
       }
     }
 
     setIngredients(updatedIngredients);
+    setTotalPrice(caughtPrice);
   }, [location.search]);
 
-  const goBack = () => navigate(-1);
+  const cancelOrder = () => navigate(-1);
 
-  const showContactData = () => navigate("/ship/contact");
+  const showContactData = () => navigate("/ship/contact", { replace: true });
 
   return (
     <div className={css.ShippingPage}>
-      <Burger ingredients={ingredients} />
       <div className={css.Title}>
         <h2>Хүргүүлэх хаяг</h2>
         <p>Захиалгаа хүлээн авах хаяг, байршлаа оруулна уу.</p>
       </div>
-      <div className={css.Buttons}>
-        <Button clicked={goBack} type="Secondary" label="Цуцлах" />
-        <Button clicked={showContactData} type="Primary" label="Төлбөр төлөх" />
-      </div>
+      {/* <div>Захиалгын дүн:</div>
+        <div>{totalPrice}₮</div> */}
+      <Order
+        deliveryCost={deliveryCost}
+        deliveryAddress={deliveryAddress}
+        totalPrice={totalPrice}
+        ingredients={ingredients}
+      />
+      {/* <Burger ingredients={ingredients} /> */}
+
       <Routes>
         <Route path="contact" element={<DeliveryInfo />} />
       </Routes>
+      <div className={css.Buttons}>
+        <Button clicked={cancelOrder} type="Secondary" label="Цуцлах" />
+        <Button clicked={showContactData} type="Primary" label="Төлбөр төлөх" />
+      </div>
     </div>
   );
 };

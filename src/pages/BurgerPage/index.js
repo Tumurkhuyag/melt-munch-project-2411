@@ -60,10 +60,9 @@ const BurgerPage = () => {
       params.push(ingredient + "=" + ingredients[ingredient].count);
     }
 
-    const query = params.join("&");
-    console.log(query);
+    params.push("totalPrice=" + totalPrice);
 
-    navigate({ pathname: "/ship", search: query });
+    navigate({ pathname: "/ship", search: params.join("&") });
     closeConfirmModal();
   };
 

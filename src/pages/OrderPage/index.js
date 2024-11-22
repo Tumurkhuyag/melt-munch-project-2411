@@ -26,13 +26,26 @@ class OrderPage extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    this.state.orders.map((el) => {
+      console.log(el[1].ingredients);
+    });
     return (
-      <div>
+      <div className={css.OrderHistory}>
+        <div className={css.Title}>
+          <h2>Захиалгын түүх</h2>
+        </div>
         {this.state.loading ? (
           <Spinner />
         ) : (
-          this.state.orders.map((el) => <Order key={el[0]} order={el[1]} />)
+          this.state.orders.map((el) => (
+            <Order
+              key={el[0]}
+              ingredients={el[1].ingredients}
+              totalPrice={el[1].totalPrice}
+              deliveryCost={el[1].deliveryCost}
+              deliveryAddress={el[1].deliveryAddress}
+            />
+          ))
         )}
       </div>
     );

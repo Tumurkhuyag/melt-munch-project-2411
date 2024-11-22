@@ -1,10 +1,30 @@
 .Order {
-  width: 80%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
   border: 1px solid #e4e4e4;
-  padding: 20px;
-  margin: 20px auto;
+  padding: 4px 8px;
+  margin: 20px 20px;
   border-radius: 6px;
   background-color: #fff;
+  align-items: center;
+}
+
+.Order .ShrunkContainer {
+  width: 140px;
+  height: 240px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Order .ShrunkContainer .Shrunk {
+  transform: scale(0.2);
+}
+
+.Order .OrderDetail {
+  text-align: left;
 }
 
 .Value {
@@ -23,16 +43,21 @@
 
 .AddressText {
   display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 4px;
 }
 
 .AddressText div {
-  display: inline-block;
-  margin-right: 4px;
+  display: grid;
+  white-space: nowrap;
+  font-size: 16px;
 }
 
 .Ingredient {
-  display: inline-block;
+  display: inline-flex;
   margin-right: 20px;
+  column-gap: 8px;
 }
 
 .Burger {
