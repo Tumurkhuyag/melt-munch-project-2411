@@ -8,10 +8,11 @@ import { Spinner } from "../../components/General/Spinner";
 import { useNavigate, useLocation, withNavigate } from "react-router-dom";
 
 const ingredientsInfo = {
-  salad: { price: 1500, name: "Салад" },
+  salad: { price: 1000, name: "Салад" },
   meat: { price: 2500, name: "Үхрийн мах" },
-  cheese: { price: 2200, name: "Бяслаг" },
+  cheese: { price: 2000, name: "Бяслаг" },
   bacon: { price: 1800, name: "Гахайн мах" },
+  egg: { price: 1200, name: "Өндөг" },
 };
 
 const BurgerPage = () => {
@@ -20,6 +21,7 @@ const BurgerPage = () => {
     meat: { count: 0, cost: 0 },
     cheese: { count: 0, cost: 0 },
     bacon: { count: 0, cost: 0 },
+    egg: { count: 0, cost: 0 },
   });
 
   const [totalPrice, setTotalPrice] = useState(0);

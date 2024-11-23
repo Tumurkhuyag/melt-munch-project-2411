@@ -39,6 +39,10 @@ export const Order = (props) => {
               <div>{props.ingredients.salad.count} ш</div>
               <div className={css.Label}>Салад</div>
             </div>
+            <div className={css.Ingredient}>
+              <div>{props.ingredients.egg.count} ш</div>
+              <div className={css.Label}>Өндөг</div>
+            </div>
           </div>
         </div>
 
