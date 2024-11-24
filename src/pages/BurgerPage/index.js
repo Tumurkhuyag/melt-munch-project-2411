@@ -1,30 +1,14 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Burger } from "../../components/Burger";
 import { BuildControls } from "../../components/BuildControls";
 import { Modal } from "../../components/General/Modal";
 import { OrderSummary } from "../../components/OrderSummary";
-import axios from "../../axios-orders";
 import { Spinner } from "../../components/General/Spinner";
-import { useNavigate, useLocation, withNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import * as actions from "../../redux/actions/burgerActions";
 
-const ingredientsInfo = {
-  salad: { price: 1000, name: "Салад" },
-  meat: { price: 2500, name: "Үхрийн мах" },
-  cheese: { price: 2000, name: "Бяслаг" },
-  bacon: { price: 1800, name: "Гахайн мах" },
-  egg: { price: 1200, name: "Өндөг" },
-};
-
-const BurgerPage = () => {
-  const [ingredients, setIngredients] = useState({
-    salad: { count: 0, cost: 0 },
-    meat: { count: 0, cost: 0 },
-    cheese: { count: 0, cost: 0 },
-    bacon: { count: 0, cost: 0 },
-    egg: { count: 0, cost: 0 },
-  });
-
-  const [totalPrice, setTotalPrice] = useState(0);
+const BurgerPage = (props) => {
   const [confirmOrder, setConfirmOrder] = useState(false);
   const [loading, setLoading] = useState(false);
   const deliveryCost = 5000;
@@ -58,11 +42,11 @@ const BurgerPage = () => {
 
     const params = [];
 
-    for (let ingredient in ingredients) {
-      params.push(ingredient + "=" + ingredients[ingredient].count);
+    for (let ingredient in props.ingredients) {
+      params.push(ingredient + "=" + props.ingredients[ingredient].count);
     }
 
-    params.push("totalPrice=" + totalPrice);
+    params.push("totalPrice=" + props.totalPrice);
 
     navigate({ pathname: "/ship", search: params.join("&") });
     closeConfirmModal();
@@ -71,34 +55,9 @@ const BurgerPage = () => {
   const showConfirmModal = () => setConfirmOrder(true); //state merge
   const closeConfirmModal = () => setConfirmOrder(false);
 
-  const addIngredient = (type) => {
-    const newIngredients = { ...ingredients };
-    newIngredients[type].count++;
-    // console.log(type, newIngredients[type].count);
-    newIngredients[type].cost =
-      newIngredients[type].count * ingredientsInfo[type].price;
-
-    const newTotalPrice = totalPrice + ingredientsInfo[type].price;
-    setTotalPrice(newTotalPrice);
-    setIngredients(newIngredients);
-  };
-
-  const deleteIngredient = (type) => {
-    if (ingredients[type].count > 0) {
-      const newIngredients = { ...ingredients };
-      newIngredients[type].count--;
-      newIngredients[type].cost =
-        newIngredients[type].count * ingredientsInfo[type].price;
-
-      const newTotalPrice = totalPrice - ingredientsInfo[type].price;
-      setTotalPrice(newTotalPrice);
-      setIngredients(newIngredients);
-    }
-  };
-
-  const disabledIngredients = { ...ingredients };
-  Object.keys(ingredients).forEach((key) => {
-    disabledIngredients[key] = ingredients[key].count <= 0;
+  const disabledIngredients = { ...props.ingredients };
+  Object.keys(props.ingredients).forEach((key) => {
+    disabledIngredients[key] = props.ingredients[key].count <= 0;
   });
 
   return (
@@ -111,25 +70,42 @@ const BurgerPage = () => {
             closeConfirmModal={closeConfirmModal}
             onConfirm={continueOrder}
             deliveryCost={deliveryCost}
-            totalPrice={totalPrice}
-            ingredientsInfo={ingredientsInfo}
-            ingredients={ingredients}
+            totalPrice={props.totalPrice}
+            ingredientsInfo={props.ingredientsInfo}
+            ingredients={props.ingredients}
           />
         )}
       </Modal>
 
-      <Burger ingredients={ingredients} />
+      <Burger ingredients={props.ingredients} />
       <BuildControls
         showConfirmModal={showConfirmModal}
-        ingredientsInfo={ingredientsInfo}
-        ingredientsCount={ingredients}
-        totalPrice={totalPrice}
+        ingredientsInfo={props.ingredientsInfo}
+        ingredientsCount={props.ingredients}
+        totalPrice={props.totalPrice}
         disabledIngredients={disabledIngredients}
-        addIngredient={addIngredient}
-        deleteIngredient={deleteIngredient}
+        addIngredient={props.addIngredientCount}
+        deleteIngredient={props.reduceIngredientCount}
       />
     </div>
   );
 };
 
-export default BurgerPage;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+    ingredientsInfo: state.ingredientsInfo,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addIngredientCount: (ingredientName) =>
+      dispatch(actions.addIngredient(ingredientName)),
+    reduceIngredientCount: (ingredientName) =>
+      dispatch(actions.reduceIngredient(ingredientName)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerPage);
