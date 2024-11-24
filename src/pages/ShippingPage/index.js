@@ -20,7 +20,7 @@ export const ShippingPage = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryCost, setDeliveryCost] = useState(5000);
-  const [deliveryAddress, setDeliveryAddress] = useState({
+  const [deliveryInfo, setDeliveryInfo] = useState({
     name: "",
     building: "",
     city: "",
@@ -81,9 +81,6 @@ export const ShippingPage = () => {
     }
   };
 
-  console.log("ShippingPage totalPrice:", totalPrice);
-  console.log("URL params:", location.search);
-
   return (
     <div className={css.ShippingPage}>
       <div className={css.Title}>
@@ -94,7 +91,7 @@ export const ShippingPage = () => {
         <div>{totalPrice}₮</div> */}
       <Order
         deliveryCost={deliveryCost}
-        deliveryAddress={deliveryAddress}
+        deliveryInfo={deliveryInfo}
         totalPrice={totalPrice}
         ingredients={ingredients}
       />

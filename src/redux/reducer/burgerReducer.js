@@ -1,3 +1,5 @@
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+
 const initialState = {
   ingredientsInfo: {
     salad: { price: 1000, name: "Салад" },
@@ -8,21 +10,22 @@ const initialState = {
   },
 
   ingredients: {
-    salad: { count: 0, cost: 0 },
-    meat: { count: 0, cost: 0 },
-    cheese: { count: 0, cost: 0 },
-    bacon: { count: 0, cost: 0 },
-    egg: { count: 0, cost: 0 },
+    salad: { count: 0, cost: 0, isDisabled: true },
+    meat: { count: 0, cost: 0, isDisabled: true },
+    cheese: { count: 0, cost: 0, isDisabled: true },
+    bacon: { count: 0, cost: 0, isDisabled: true },
+    egg: { count: 0, cost: 0, isDisabled: true },
   },
 
   totalPrice: 0,
+  isDisabled: true,
 };
 
 export const burgerReducer = (state = initialState, action) => {
   if (action.type === "ADD_INGREDIENT") {
-    console.log(state.ingredients[action.ingredientName].count);
     const newCount = state.ingredients[action.ingredientName].count + 1;
     const ingredientPrice = state.ingredientsInfo[action.ingredientName].price;
+    const newTotalPrice = state.totalPrice + ingredientPrice;
 
     return {
       ...state,
@@ -31,9 +34,11 @@ export const burgerReducer = (state = initialState, action) => {
         [action.ingredientName]: {
           count: newCount,
           cost: newCount * ingredientPrice,
+          isDisabled: false,
         },
       },
-      totalPrice: state.totalPrice + ingredientPrice,
+      totalPrice: newTotalPrice,
+      isDisabled: false,
     };
   } else if (action.type === "REMOVE_INGREDIENT") {
     // Check if count is already 0
@@ -43,6 +48,7 @@ export const burgerReducer = (state = initialState, action) => {
 
     const newCount = state.ingredients[action.ingredientName].count - 1;
     const ingredientPrice = state.ingredientsInfo[action.ingredientName].price;
+    const newTotalPrice = state.totalPrice - ingredientPrice;
 
     return {
       ...state,
@@ -51,10 +57,12 @@ export const burgerReducer = (state = initialState, action) => {
         [action.ingredientName]: {
           count: newCount,
           cost: newCount * ingredientPrice,
+          isDisabled: newCount === 0,
         },
       },
 
-      totalPrice: state.totalPrice - ingredientPrice,
+      totalPrice: newTotalPrice,
+      isDisabled: newTotalPrice === 0,
     };
   }
 

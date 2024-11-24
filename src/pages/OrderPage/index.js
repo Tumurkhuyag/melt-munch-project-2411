@@ -26,9 +26,7 @@ class OrderPage extends React.Component {
   }
 
   render() {
-    this.state.orders.map((el) => {
-      console.log(el[1].ingredients);
-    });
+    this.state.orders.map((el) => {});
     return (
       <div className={css.OrderHistory}>
         <div className={css.Title}>
@@ -43,7 +41,7 @@ class OrderPage extends React.Component {
               ingredients={el[1].ingredients}
               totalPrice={el[1].totalPrice}
               deliveryCost={el[1].deliveryCost}
-              deliveryAddress={el[1].deliveryAddress}
+              deliveryInfo={el[1].deliveryInfo}
             />
           ))
         )}

@@ -34,7 +34,7 @@ export const DeliveryInfo = (props) => {
       ingredients: props.ingredients,
       totalPrice: props.totalPrice,
       deliveryCost: props.deliveryCost,
-      deliveryAddress: {
+      deliveryInfo: {
         name: deliveryInfo.name,
         phoneNumber1: deliveryInfo.phoneNumber1,
         phoneNumber2: deliveryInfo.phoneNumber2,
@@ -52,16 +52,15 @@ export const DeliveryInfo = (props) => {
     axios
       .post("/orders.json", order)
       .then((repspone) => {
-        console.log("!!!Successfully saved!!!");
+        console.log("!!!Захиалга баталгаажиж, амжилттай илгээгдлээ!!!");
       })
       .catch((err) => {
-        console.log("!!!Алдаа гарлаа!!! ", err);
+        console.log("!!!Илгээх явцад алдаа гарлаа!!! ", err);
       })
       .finally(() => {
         setLoading(false);
         navigate("/orders", { replace: true });
       });
-    console.log("Захиалгыг баталгаажууллаа");
   };
 
   return (

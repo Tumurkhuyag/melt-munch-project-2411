@@ -3,7 +3,6 @@ import { BuildControl } from "../BuildControl";
 import css from "./style.module.css";
 
 export const BuildControls = (props) => {
-  // console.log(props.ingredientsInfo);
   // console.log(props.showConfirmModal);
 
   return (
@@ -16,9 +15,10 @@ export const BuildControls = (props) => {
             key={el}
             addIngredient={props.addIngredient}
             deleteIngredient={props.deleteIngredient}
-            disabledIngredients={props.disabledIngredients}
+            isDisabled={props.isDisabled}
             type={el}
-            label={`${props.ingredientsInfo[el].name} (${props.ingredientsCount[el].count}ш, ${props.ingredientsCount[el].cost}₮) `}
+            ingredientsInfo={props.ingredientsInfo}
+            ingredients={props.ingredients}
           />
         );
       })}
@@ -30,7 +30,7 @@ export const BuildControls = (props) => {
 
         <button
           onClick={props.showConfirmModal}
-          disabled={props.totalPrice <= 0}
+          disabled={props.isDisabled}
           className={css.OrderButton}>
           Сагслах
         </button>
