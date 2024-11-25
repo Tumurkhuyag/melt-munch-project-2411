@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import axios from "../../axios-orders";
 import { useNavigate } from "react-router-dom";
 import css from "./style.module.css";
 import { Button } from "../General/Button";
 import { Spinner } from "../General/Spinner";
+import * as actions from "../../redux/actions/orderActions";
 
 const DeliveryInfo = (props) => {
   const [deliveryInfo, setDeliveryInfo] = useState({
@@ -22,7 +22,12 @@ const DeliveryInfo = (props) => {
   });
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  if (
+    props.newOrderStatus.finished === true &&
+    props.newOrderStatus.error === null
+  ) {
+    navigate("/orders", { replace: true });
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target; // Extract `name` and `value` from the input
@@ -31,7 +36,7 @@ const DeliveryInfo = (props) => {
   };
 
   const saveOrder = () => {
-    const order = {
+    const newOrder = {
       ingredients: props.ingredients,
       totalPrice: props.totalPrice,
       deliveryCost: props.deliveryCost,
@@ -49,25 +54,18 @@ const DeliveryInfo = (props) => {
         notes: deliveryInfo.notes,
       },
     };
-    setLoading(true);
-    axios
-      .post("/orders.json", order)
-      .then((repspone) => {
-        console.log("!!!Захиалга баталгаажиж, амжилттай илгээгдлээ!!!");
-      })
-      .catch((err) => {
-        console.log("!!!Илгээх явцад алдаа гарлаа!!! ", err);
-      })
-      .finally(() => {
-        setLoading(false);
-        navigate("/orders", { replace: true });
-      });
+
+    props.saveOrderAction(newOrder);
   };
 
   return (
     <div>
       <div>
-        {loading ? (
+        <div>
+          {props.newOrderStatus.error &&
+            `Захиалгыг хадгалах явцад алдаа гарлаа : ${props.newOrderStatus.error}`}
+        </div>
+        {props.newOrderStatus.saving ? (
           <Spinner />
         ) : (
           <div className={css.DeliveryInfo}>
@@ -158,7 +156,14 @@ const mapStateToProps = (state) => {
     totalPrice: state.burgerReducer.totalPrice,
     ingredients: state.burgerReducer.ingredients,
     deliveryCost: state.burgerReducer.deliveryCost,
+    newOrderStatus: state.orderReducer.newOrder,
   };
 };
 
-export default connect(mapStateToProps)(DeliveryInfo);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveOrderAction: (newOrder) => dispatch(actions.saveOrder(newOrder)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeliveryInfo);

@@ -35,3 +35,40 @@ export const loadOrdersError = (error) => {
     error,
   };
 };
+
+// Захиалгыг хадгалах
+export const saveOrder = (newOrder) => {
+  return function (dispatch) {
+    // Spinner эргэлдүүлж харуулна
+    dispatch(saveOrderStart());
+
+    // Firebase realtime cloud -руу хадгална
+    axios
+      .post("/orders.json", newOrder)
+      .then((repspone) => {
+        dispatch(saveOrderSuccess());
+      })
+      .catch((error) => {
+        dispatch(saveOrderError(error));
+      });
+  };
+};
+
+export const saveOrderStart = () => {
+  return {
+    type: "SAVE_ORDER_START",
+  };
+};
+
+export const saveOrderSuccess = () => {
+  return {
+    type: "SAVE_ORDER_SUCCESS",
+  };
+};
+
+export const saveOrderError = (error) => {
+  return {
+    type: "SAVE_ORDER_ERROR",
+    error,
+  };
+};
