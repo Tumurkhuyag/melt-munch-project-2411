@@ -6,6 +6,8 @@ import { SideBar } from "../../components/SideBar";
 import OrderPage from "../OrderPage";
 import { Route, Routes } from "react-router-dom";
 import ShippingPage from "../ShippingPage";
+import LoginPage from "../LoginPage";
+import SignupPage from "../SignupPage";
 
 class App extends Component {
   state = { showSidebar: false };
@@ -30,6 +32,8 @@ class App extends Component {
         />
         <main className={css.Content}>
           <Routes>
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<BurgerPage />} />
             <Route path="/ship/*" element={<ShippingPage />} />
             <Route path="/orders" element={<OrderPage />} />

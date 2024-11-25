@@ -11,6 +11,8 @@ export const Menu = () => {
           Захиалах
         </MenuItem>
         <MenuItem link="/orders">Захиалгын түүх</MenuItem>
+        <MenuItem link="/login">Нэвтрэх</MenuItem>
+        <MenuItem link="/signup">Бүртгүүлэх</MenuItem>
       </ul>
     </div>
   );

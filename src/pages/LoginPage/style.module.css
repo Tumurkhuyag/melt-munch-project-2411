@@ -1,0 +1,40 @@
+.Login {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: auto;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  row-gap: 20px; /* Adds space between elements */
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+}
+
+.Login input {
+  flex: 1; /* Ensure inputs fill the available space */
+  font-size: 16px;
+  height: 40px; /* Uniform height */
+  padding: 0 12px;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.Login input:focus {
+  outline: none;
+  border: 1px solid #101010;
+}
+
+.Login input {
+  flex: none; /* Avoid stretching */
+}
+
+@media (min-width: 500px) {
+  .Login {
+    width: 400px;
+  }
+}

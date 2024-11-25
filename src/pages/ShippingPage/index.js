@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import css from "./style.module.css";
 import { Button } from "../../components/General/Button";
 import DeliveryInfo from "../../components/DeliveryInfo";
 import Order from "../../components/Order";
 
 const ShippingPage = (props) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const isNavigating = useRef(false);
 
@@ -21,9 +20,6 @@ const ShippingPage = (props) => {
     khoroolol: "",
     number: "",
   });
-
-  // Store the parsed URL parameters
-  const parsedParamsRef = useRef(null);
 
   const cancelOrder = () => navigate(-1);
 

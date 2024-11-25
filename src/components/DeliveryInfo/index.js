@@ -7,6 +7,7 @@ import { Spinner } from "../General/Spinner";
 import * as actions from "../../redux/actions/orderActions";
 
 const DeliveryInfo = (props) => {
+  const navigate = useNavigate();
   const [deliveryInfo, setDeliveryInfo] = useState({
     name: "",
     phoneNumber1: "",
@@ -21,13 +22,14 @@ const DeliveryInfo = (props) => {
     notes: "",
   });
 
-  const navigate = useNavigate();
-  if (
-    props.newOrderStatus.finished === true &&
-    props.newOrderStatus.error === null
-  ) {
-    navigate("/orders", { replace: true });
-  }
+  useEffect(() => {
+    if (
+      props.newOrderStatus.finished === true &&
+      props.newOrderStatus.error === null
+    ) {
+      navigate("/orders", { replace: true });
+    }
+  }, [props.newOrderStatus.finished, props.newOrderStatus.error, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target; // Extract `name` and `value` from the input
