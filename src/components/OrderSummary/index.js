@@ -1,9 +1,10 @@
 import React from "react";
 import { Button } from "../General/Button";
+import { connect } from "react-redux";
 
 import css from "./style.module.css";
 
-export const OrderSummary = (props) => {
+const OrderSummary = (props) => {
   // console.log(props.deliveryCost);
 
   return (
@@ -50,3 +51,14 @@ export const OrderSummary = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.burgerReducer.ingredients,
+    ingredientsInfo: state.burgerReducer.ingredientsInfo,
+    totalPrice: state.burgerReducer.totalPrice,
+    deliveryCost: state.burgerReducer.deliveryCost,
+  };
+};
+
+export default connect(mapStateToProps)(OrderSummary);

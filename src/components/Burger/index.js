@@ -1,9 +1,10 @@
 import React from "react";
+import { connect, useSelector } from "react-redux";
 import { BurgerIngredient } from "../BurgerIngredient";
 
 import css from "./style.module.css";
 
-export const Burger = (props) => {
+const Burger = (props) => {
   let content = [];
 
   const items = Object.entries(props.ingredients);
@@ -33,3 +34,9 @@ export const Burger = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return { ingredients: state.burgerReducer.ingredients };
+};
+
+export default connect(mapStateToProps)(Burger);

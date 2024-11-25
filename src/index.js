@@ -5,11 +5,31 @@ import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
-import { createStore } from "redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { thunk } from "redux-thunk";
 import { burgerReducer } from "./redux/reducer/burgerReducer";
+import orderReducer from "./redux/reducer/orderReducer";
 
-const store = createStore(burgerReducer);
+const loggerMiddleware = (store) => (next) => (action) => {
+  console.log("MyLoggerMiddleware: Dispatching ==>", action);
+  console.log("MyLoggerMiddleware: State BEFORE : ", store.getState());
+  const result = next(action);
+  console.log("MyLoggerMiddleware: State AFTER : ", store.getState());
+  return result;
+};
+
+const rootReducer = combineReducers({
+  burgerReducer,
+  orderReducer,
+});
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(loggerMiddleware);
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

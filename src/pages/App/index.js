@@ -5,7 +5,7 @@ import BurgerPage from "../BurgerPage";
 import { SideBar } from "../../components/SideBar";
 import OrderPage from "../OrderPage";
 import { Route, Routes } from "react-router-dom";
-import { ShippingPage } from "../ShippingPage";
+import ShippingPage from "../ShippingPage";
 
 class App extends Component {
   state = { showSidebar: false };

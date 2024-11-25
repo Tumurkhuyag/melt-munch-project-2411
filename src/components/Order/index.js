@@ -1,14 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import css from "./style.module.css";
-import { Burger } from "../Burger";
+import Burger from "../Burger";
 
-export const Order = (props) => {
+const Order = (props) => {
   return (
     <div className={css.Order}>
       <div className={css.ShrunkContainer}>
         <div className={css.Shrunk}>
-          <Burger ingredients={props.ingredients} />
+          <Burger />
         </div>
       </div>
 
@@ -16,7 +17,7 @@ export const Order = (props) => {
         <div className={css.TotalPrice}>
           <div className={css.Label}>Захиалгын дүн:</div>{" "}
           <div className={css.Value}>
-            {props.totalPrice + props.deliveryCost}
+            {props.totalPrice + props.deliveryCost}₮
           </div>
         </div>
 
@@ -62,3 +63,5 @@ export const Order = (props) => {
     </div>
   );
 };
+
+export default Order;

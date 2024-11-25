@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import axios from "../../axios-orders";
 import { useNavigate } from "react-router-dom";
 import css from "./style.module.css";
 import { Button } from "../General/Button";
 import { Spinner } from "../General/Spinner";
 
-export const DeliveryInfo = (props) => {
+const DeliveryInfo = (props) => {
   const [deliveryInfo, setDeliveryInfo] = useState({
     name: "",
     phoneNumber1: "",
@@ -151,3 +152,13 @@ export const DeliveryInfo = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    totalPrice: state.burgerReducer.totalPrice,
+    ingredients: state.burgerReducer.ingredients,
+    deliveryCost: state.burgerReducer.deliveryCost,
+  };
+};
+
+export default connect(mapStateToProps)(DeliveryInfo);

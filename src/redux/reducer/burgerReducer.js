@@ -1,5 +1,3 @@
-import { isDisabled } from "@testing-library/user-event/dist/utils";
-
 const initialState = {
   ingredientsInfo: {
     salad: { price: 1000, name: "Салад" },
@@ -19,6 +17,8 @@ const initialState = {
 
   totalPrice: 0,
   isDisabled: true,
+
+  deliveryCost: 3000,
 };
 
 export const burgerReducer = (state = initialState, action) => {

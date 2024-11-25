@@ -5,7 +5,7 @@ export const addIngredient = (ingredientName) => {
   };
 };
 
-export const reduceIngredient = (ingredientName) => {
+export const deleteIngredient = (ingredientName) => {
   return {
     type: "REMOVE_INGREDIENT",
     ingredientName,

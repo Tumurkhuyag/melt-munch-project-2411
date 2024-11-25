@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import { BuildControl } from "../BuildControl";
+import * as actions from "../../redux/actions/burgerActions";
 import css from "./style.module.css";
 
-export const BuildControls = (props) => {
+const BuildControls = (props) => {
   // console.log(props.showConfirmModal);
 
   return (
@@ -38,3 +40,23 @@ export const BuildControls = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.burgerReducer.ingredients,
+    totalPrice: state.burgerReducer.totalPrice,
+    ingredientsInfo: state.burgerReducer.ingredientsInfo,
+    isDisabled: state.burgerReducer.isDisabled,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addIngredient: (ingredientName) =>
+      dispatch(actions.addIngredient(ingredientName)),
+    deleteIngredient: (ingredientName) =>
+      dispatch(actions.deleteIngredient(ingredientName)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuildControls);
