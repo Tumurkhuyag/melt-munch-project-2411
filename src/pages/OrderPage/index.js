@@ -8,7 +8,7 @@ import * as actions from "../../redux/actions/orderActions";
 
 class OrderPage extends React.Component {
   componentDidMount() {
-    this.props.loadOrders();
+    this.props.loadOrders(this.props.userId);
     // this.setState({ loading: true });
   }
 
@@ -40,12 +40,13 @@ const mapStateToProps = (state) => {
   return {
     orders: state.orderReducer.orders,
     loading: state.orderReducer.loading,
+    userId: state.signupLoginReducer.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadOrders: () => dispatch(actions.loadOrders()),
+    loadOrders: (userId) => dispatch(actions.loadOrders(userId)),
   };
 };
 

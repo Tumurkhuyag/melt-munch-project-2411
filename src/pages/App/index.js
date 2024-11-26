@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import css from "./style.module.css";
 import { Toolbar } from "../../components/Toolbar";
@@ -11,43 +11,40 @@ import LoginPage from "../LoginPage";
 import SignupPage from "../SignupPage";
 import Logout from "../../components/Logout";
 
-class App extends Component {
-  state = { showSidebar: false };
+const App = (props) => {
+  const [showSidebar, setShowSidebar] = useState(false);
 
-  toggleSidebar = () => {
-    this.setState((prevState) => {
-      return { showSidebar: !prevState.showSidebar };
-    });
+  const toggleSidebar = () => {
+    setShowSidebar((prevState) => !prevState);
   };
 
-  render() {
-    // console.log(this.state.showSidebar);
-    return (
-      <div>
-        <Toolbar
-          showSidebar={this.state.showSidebar}
-          toggleSidebar={this.toggleSidebar}
-        />
-        <SideBar
-          showSidebar={this.state.showSidebar}
-          toggleSidebar={this.toggleSidebar}
-        />
-        <main className={css.Content}>
-          {this.props.userId && <div>Сайн уу, {this.props.userId}</div>}
-
+  return (
+    <div>
+      <Toolbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      <SideBar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      <main className={css.Content}>
+        {props.userId ? (
+          <Fragment>
+            <div>Сайн уу, {props.userId}</div>
+            <Routes>
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/" element={<BurgerPage />} />
+              <Route path="/ship/*" element={<ShippingPage />} />
+              <Route path="/orders" element={<OrderPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Fragment>
+        ) : (
           <Routes>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/" element={<BurgerPage />} />
-            <Route path="/ship/*" element={<ShippingPage />} />
-            <Route path="/orders" element={<OrderPage />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
-        </main>
-      </div>
-    );
-  }
-}
+        )}
+      </main>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {

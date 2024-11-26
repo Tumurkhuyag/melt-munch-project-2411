@@ -39,6 +39,7 @@ const DeliveryInfo = (props) => {
 
   const saveOrder = () => {
     const newOrder = {
+      userId: props.userId,
       ingredients: props.ingredients,
       totalPrice: props.totalPrice,
       deliveryCost: props.deliveryCost,
@@ -159,6 +160,7 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerReducer.ingredients,
     deliveryCost: state.burgerReducer.deliveryCost,
     newOrderStatus: state.orderReducer.newOrder,
+    userId: state.signupLoginReducer.userId,
   };
 };
 

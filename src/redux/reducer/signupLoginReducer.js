@@ -5,6 +5,7 @@ const initialState = {
   firebaseErrorCode: null,
   token: null,
   userId: null,
+  userName: null,
 };
 
 const signupLoginReducer = (state = initialState, action) => {
@@ -29,6 +30,7 @@ const signupLoginReducer = (state = initialState, action) => {
         saving: false,
         token: action.data.idToken,
         userId: action.data.localId,
+        userName: action.data.localName,
       };
 
     case "LOGIN_USER_START":
