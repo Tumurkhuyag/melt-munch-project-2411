@@ -53,6 +53,15 @@ const signupLoginReducer = (state = initialState, action) => {
         userId: action.data.localId,
       };
 
+    case "LOGOUT":
+      return {
+        ...state,
+        token: null,
+        userId: null,
+        firebaseError: null,
+        firebaseErrorCode: null,
+      };
+
     default:
       return state;
   }

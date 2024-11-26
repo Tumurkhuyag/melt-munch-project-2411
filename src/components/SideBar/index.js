@@ -2,7 +2,7 @@ import React from "react";
 
 import css from "./style.module.css";
 import { Logo } from "../Logo";
-import { Menu } from "../Menu";
+import Menu from "../Menu";
 import { Shadow } from "../General/Shadow";
 
 export const SideBar = (props) => {
