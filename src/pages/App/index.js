@@ -35,7 +35,6 @@ const App = (props) => {
       <main className={css.Content}>
         {props.userId ? (
           <Fragment>
-            <div>Сайн уу, {props.userId}</div>
             <Routes>
               <Route path="/logout" element={<Logout />} />
               <Route path="/" element={<BurgerPage />} />
