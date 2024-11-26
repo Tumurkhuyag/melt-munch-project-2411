@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import { thunk } from "redux-thunk";
 import { burgerReducer } from "./redux/reducer/burgerReducer";
 import orderReducer from "./redux/reducer/orderReducer";
-import signupReducer from "./redux/reducer/signupReducer";
+import signupLoginReducer from "./redux/reducer/signupLoginReducer";
 
 const loggerMiddleware = (store) => (next) => (action) => {
   console.log("MyLoggerMiddleware: Dispatching ==>", action);
@@ -23,7 +23,7 @@ const loggerMiddleware = (store) => (next) => (action) => {
 const rootReducer = combineReducers({
   burgerReducer,
   orderReducer,
-  signupReducer,
+  signupLoginReducer,
 });
 
 const store = configureStore({

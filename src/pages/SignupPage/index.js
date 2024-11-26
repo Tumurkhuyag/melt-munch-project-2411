@@ -43,7 +43,7 @@ const SignupPage = (props) => {
 
   return (
     <div className={css.Signup}>
-      {props.userId && navigate("/orders", { replace: true })}
+      {props.userId && navigate("/", { replace: true })}
       <h2>Бүртгүүлэх</h2>
       <input
         type="text"
@@ -100,9 +100,9 @@ const SignupPage = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    saving: state.signupReducer.saving,
-    firebaseError: state.signupReducer.firebaseError,
-    userId: state.signupReducer.userId,
+    saving: state.signupLoginReducer.saving,
+    firebaseError: state.signupLoginReducer.firebaseError,
+    userId: state.signupLoginReducer.userId,
   };
 };
 
