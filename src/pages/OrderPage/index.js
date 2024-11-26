@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
     orders: state.orderReducer.orders,
     loading: state.orderReducer.loading,
     userId: state.signupLoginReducer.userId,
+    token: state.signupLoginReducer.token,
   };
 };
 

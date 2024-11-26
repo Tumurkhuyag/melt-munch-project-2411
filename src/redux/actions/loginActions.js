@@ -16,7 +16,14 @@ export const loginUser = (email, password) => {
         data
       )
       .then((result) => {
-        dispatch(loginUserSuccess(result.data));
+        // LocalStorage -руу firebase -ээс ирж буй result гээд бүх дата -г хадгална
+        const token = result.data.idToken;
+        const userId = result.data.localId;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", userId);
+
+        dispatch(loginUserSuccess(token, userId));
       })
       .catch((err) => {
         dispatch(loginUserError(err));
@@ -32,10 +39,11 @@ export const loginUserStart = () => {
   };
 };
 
-export const loginUserSuccess = (data) => {
+export const loginUserSuccess = (token, userId) => {
   return {
     type: "LOGIN_USER_SUCCESS",
-    data,
+    token,
+    userId,
   };
 };
 

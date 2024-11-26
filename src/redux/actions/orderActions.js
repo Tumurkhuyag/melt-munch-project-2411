@@ -1,15 +1,17 @@
 import axios from "../../axios-orders";
 
 export const loadOrders = (userId) => {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     // Захиалгыг татаж эхэлснээ мэдэгдэнэ
     // Энийг хүлээж аваад Spinner ажиллаж эхэлнэ
     dispatch(loadOrdersStart());
 
+    const token = getState().signupLoginReducer.token;
+
     axios
-      .get(`orders.json?orderBy="userId"&equalTo="${userId}"`)
-      .then((repspone) => {
-        const loadedOrders = Object.entries(repspone.data).reverse();
+      .get(`orders.json?&auth=${token}&orderBy="userId"&equalTo="${userId}"`)
+      .then((repsponse) => {
+        const loadedOrders = Object.entries(repsponse.data).reverse();
         dispatch(loadOrdersSuccess(loadedOrders));
       })
       .catch((err) => loadOrdersError(err));
@@ -38,13 +40,15 @@ export const loadOrdersError = (error) => {
 
 // Захиалгыг хадгалах
 export const saveOrder = (newOrder) => {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     // Spinner эргэлдүүлж харуулна
     dispatch(saveOrderStart());
 
+    const token = getState().signupLoginReducer.token;
+
     // Firebase realtime cloud -руу хадгална
     axios
-      .post("/orders.json", newOrder)
+      .post(`/orders.json?auth=${token}`, newOrder)
       .then((repspone) => {
         dispatch(saveOrderSuccess());
       })

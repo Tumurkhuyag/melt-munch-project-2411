@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import css from "./style.module.css";
 import { Toolbar } from "../../components/Toolbar";
@@ -10,6 +10,7 @@ import ShippingPage from "../ShippingPage";
 import LoginPage from "../LoginPage";
 import SignupPage from "../SignupPage";
 import Logout from "../../components/Logout";
+import * as actions from "../../redux/actions/loginActions";
 
 const App = (props) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -17,6 +18,15 @@ const App = (props) => {
   const toggleSidebar = () => {
     setShowSidebar((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (token) {
+      props.autoLogin(token, userId);
+    }
+  }, []);
 
   return (
     <div>
@@ -52,4 +62,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    autoLogin: (token, userId) =>
+      dispatch(actions.loginUserSuccess(token, userId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
