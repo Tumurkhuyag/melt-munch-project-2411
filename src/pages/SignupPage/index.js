@@ -3,8 +3,11 @@ import css from "./style.module.css";
 import { Button } from "../../components/General/Button";
 import * as actions from "../../redux/actions/signupActions";
 import { connect } from "react-redux";
+import { Spinner } from "../../components/General/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = (props) => {
+  const navigate = useNavigate();
   const [signupInput, setSignupInput] = useState({
     username: "",
     email: "",
@@ -40,6 +43,7 @@ const SignupPage = (props) => {
 
   return (
     <div className={css.Signup}>
+      {props.userId && navigate("/orders", { replace: true })}
       <h2>Бүртгүүлэх</h2>
       <input
         type="text"
@@ -72,9 +76,34 @@ const SignupPage = (props) => {
       {signupInput.error && (
         <div style={{ color: "red" }}>{signupInput.error}</div>
       )}
+      {props.firebaseError && (
+        <div style={{ color: "red" }}>
+          {(() => {
+            switch (props.firebaseError) {
+              case "WEAK_PASSWORD : Password should be at least 6 characters":
+                return "6 -с их тэмдэгт бүхий нууц үг зохионо уу!";
+              case "EMAIL_EXISTS":
+                return "Имэйл хаяг бүртгэлтэй байна!";
+              case "auth/network-request-failed":
+                return "Network error. Please check your internet connection.";
+              default:
+                return props.firebaseError;
+            }
+          })()}
+        </div>
+      )}
+      {props.saving && <Spinner />}
       <Button label="Бүртгүүлэх" type="Primary" clicked={signup} />
     </div>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    saving: state.signupReducer.saving,
+    firebaseError: state.signupReducer.firebaseError,
+    userId: state.signupReducer.userId,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -84,4 +113,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignupPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

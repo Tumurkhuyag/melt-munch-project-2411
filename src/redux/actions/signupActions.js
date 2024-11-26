@@ -33,10 +33,10 @@ export const signupUserStart = () => {
   };
 };
 
-export const signupUserSuccess = (firebaseResultData) => {
+export const signupUserSuccess = (data) => {
   return {
     type: "SIGNUP_USER_SUCCESS",
-    firebaseResultData,
+    data,
   };
 };
 
