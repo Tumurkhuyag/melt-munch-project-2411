@@ -12,6 +12,9 @@ export const SideBar = (props) => {
     classes = [css.SideBar, css.Open];
   }
 
+  console.log("toggleSidebar   ", props.toggleSidebar);
+  console.log("showSidebar   ", props.showSidebar);
+
   return (
     <div>
       <Shadow show={props.showSidebar} onClick={props.toggleSidebar} />
