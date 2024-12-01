@@ -28,9 +28,8 @@ const signupLoginReducer = (state = initialState, action) => {
       return {
         ...state,
         saving: false,
-        token: action.data.idToken,
-        userId: action.data.localId,
-        userName: action.data.localName,
+        token: action.token,
+        userId: action.userId,
       };
 
     case "LOGIN_USER_START":
