@@ -1,4 +1,5 @@
 import axios from "../../axios-orders";
+import * as actions from "./signupActions";
 
 export const loginUser = (email, password) => {
   return function (dispatch) {
@@ -19,11 +20,18 @@ export const loginUser = (email, password) => {
         // LocalStorage -руу firebase -ээс ирж буй result гээд бүх дата -г хадгална
         const token = result.data.idToken;
         const userId = result.data.localId;
+        const expiresIn = result.data.expiresIn;
+        const expireDate = new Date(new Date().getTime() + expiresIn * 1000);
+        const refreshToken = result.data.refreshToken;
 
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("expireDate", expireDate);
+        localStorage.setItem("refreshToken", refreshToken);
 
         dispatch(loginUserSuccess(token, userId));
+        dispatch(actions.autoLogoutAfterDuration(expiresIn * 1000));
+        // dispatch(actions.autoLogoutAfterDuration(5000));
       })
       .catch((err) => {
         dispatch(loginUserError(err));

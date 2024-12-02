@@ -11,6 +11,7 @@ import LoginPage from "../LoginPage";
 import SignupPage from "../SignupPage";
 import Logout from "../../components/Logout";
 import * as actions from "../../redux/actions/loginActions";
+import * as signupActions from "../../redux/actions/signupActions";
 
 const App = (props) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -22,9 +23,21 @@ const App = (props) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
+    const expireDate = new Date(localStorage.getItem("expireDate"));
+    const refreshToken = localStorage.getItem("refreshToken");
 
     if (token) {
-      props.autoLogin(token, userId);
+      if (expireDate > new Date()) {
+        // Token -ийн хугацаа дуусаагүй учир autoLogin хийнэ
+        props.autoLogin(token, userId);
+        // Token хүчингүй болгох хугацааг тооцож, тухайн хугацаа дуусах үед autoLogout хийнэ
+        props.autoLogoutAfterDuration(
+          expireDate.getTime - new Date().getTime()
+        );
+      } else {
+        // Token -ийн хугацаа дууссан учир logout хийнэ
+        props.logout(token, userId);
+      }
     }
   }, []);
 
@@ -65,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     autoLogin: (token, userId) =>
       dispatch(actions.loginUserSuccess(token, userId)),
+    logout: () => dispatch(signupActions.logout()),
+    autoLogoutAfterDuration: () =>
+      dispatch(signupActions.autoLogoutAfterDuration()),
   };
 };
 
